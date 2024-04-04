@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quran Pages</title>
+
+  <div class="menu-toggle">
+  <div class="menu-bar"></div>
+  <div class="menu-bar"></div>
+  <div class="menu-bar"></div>
+</div>
+
+<div class="navbar" id="navbar">
+  <div class="dropdown">
+    
+       <button class="dropbtns" id="firstBtn" onclick="openFirstImage()">Restart</button>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn">Para List</button>
+    <div class="dropdown-content">
+<a><button onclick="openPage(2)">Alif Laam Meem</button></a>
+<a><button onclick="openPage(22)">Saqawool</button></a>
+<a><button onclick="openPage(3)">Tilka</button></a>
+<a><button onclick="openPage(4)">Yunus</button></a>
+<a><button onclick="openPage(5)">Ha Meem</button></a>
+<a><button onclick="openPage(6)">Wa Qaloo</button></a>
+<a><button onclick="openPage(7)">Wa Qaloo</button></a>
+<a><button onclick="openPage(8)">Wa Law Annana</button></a>
+<a><button onclick="openPage(9)">Qad Aflaha</button></a>
+<a><button onclick="openPage(10)">Wa A'lamoo</button></a>
+<a><button onclick="openPage(11)">Yatafakkaroon</button></a>
+<a><button onclick="openPage(12)">Wa Maa Ubarri'u</button></a>
+<a><button onclick="openPage(13)">Wa Maa Ubarri'u</button></a>
+<a><button onclick="openPage(14)">Rubama</button></a>
+<a><button onclick="openPage(15)">Subhana</button></a>
+<a><button onclick="openPage(16)">Qala A'rabu</button></a>
+<a><button onclick="openPage(17)">Aqtarabat</button></a>
+<a><button onclick="openPage(18)">Qad Aflaha</button></a>
+<a><button onclick="openPage(19)">Wa Qaloo</button></a>
+<a><button onclick="openPage(20)">Amman</button></a>
+<a><button onclick="openPage(21)">Ata Mal</button></a>
+<a><button onclick="openPage(22)">Yataasaa'aloon</button></a>
+<a><button onclick="openPage(23)">Wa Maa Min</button></a>
+<a><button onclick="openPage(24)">Wa Man Yattaqi</button></a>
+<a><button onclick="openPage(25)">Fa Man Adhlamu</button></a>
+<a><button onclick="openPage(26)">Ha Meem</button></a>
+<a><button onclick="openPage(27)">Qala Fa'ma</button></a>
+<a><button onclick="openPage(28)">Qad Sami'a</button></a>
+<a><button onclick="openPage(29)">Tabaarak</button></a>
+<a><button onclick="openPage(30)">Amma</button></a>
+
+    </div>
+  </div>
+</div>
+<style>
+/* Adjustments for mobile devices */
+
+/* Set max-width for body */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+}
+
+/* Set max-width for containers */
+.containers,
+.container {
+  max-width: 100%;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Adjust Quran page container margin for mobile */
+.quran-page-container {
+  position: relative;
+  margin-bottom: 20px; /* Adjust for fixed navigation buttons */
+}
+
+/* Adjust Quran image for mobile */
+.quran-image {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Adjust navigation buttons for mobile */
+.navigation-btns {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Adjust button styles for mobile */
+.btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Original CSS */
+
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.menu-bar {
+  width: 30px;
+  height: 3px;
+  background-color: #333;
+  margin: 5px 0;
+}
+
+.navbar {
+  display: none;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: inherit;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.dropbtns {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: inherit;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #444;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content {
+  max-height: 200px; /* Adjust the maximum height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Optional: Adjust the scrollbar styles */
+.dropdown-content::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded corners of the scrollbar thumb */
+}
+
+</style>
+</head>
+<body>
+<div class="containers">
+<div class="container">
+  <div class="quran-page-container">
+    <div id="quranPage" class="quran-page">
+      <img id="quranImage" class="quran-image" src="" alt="Quran Page">
+    </div>
+  </div>
+</div>
+
+<div class="navigation-btns">
+  <button id="nextBtn" class="btn">Next Page</button>
+<button id="prevBtn" class="btn">Previous Page</button>
+
+</div>
+
+<script>
+  let currentPage = 1;
+  let totalPages = 0;
+  let images = [];
+  let lastReadPage = localStorage.getItem('lastReadPage');
+
+  // Function to fetch Quran pages from the provided JSON file or cache
+  function fetchQuranPages() {
+    if ('caches' in window) {
+      caches.match('pages.json').then(response => {
+        if (response) {
+          return response.json();
+        }
+      }).then(data => {
+        if (data) {
+          images = data.images;
+          totalPages = images.length;
+          if (lastReadPage && lastReadPage <= totalPages) {
+            currentPage = parseInt(lastReadPage);
+          }
+          displayQuranPage(currentPage);
+        } else {
+          fetchPagesFromServer();
+        }
+      }).catch(error => {
+        console.error('Error fetching Quran pages from cache:', error);
+        fetchPagesFromServer();
+      });
+    } else {
+      fetchPagesFromServer();
+    }
+  }
+
+  // Function to fetch Quran pages from the server
+  function fetchPagesFromServer() {
+    fetch('https://raw.githubusercontent.com/itzfew/Quran/main/pages.json')
+      .then(response => response.json())
+      .then(data => {
+        images = data.images;
+        totalPages = images.length;
+        if (lastReadPage && lastReadPage <= totalPages) {
+          currentPage = parseInt(lastReadPage);
+        }
+        displayQuranPage(currentPage);
+        cacheQuranPages(data);
+      })
+      .catch(error => console.error('Error fetching Quran pages from server:', error));
+  }
+
+  // Function to cache Quran pages for offline use
+  function cacheQuranPages(data) {
+    if ('caches' in window) {
+      caches.open('quran-pages-v1').then(cache => {
+        cache.addAll(['pages.json']);
+      });
+    }
+  }
+
+  // Function to display Quran page for the specified page number
+  function displayQuranPage(page) {
+    const pageImage = images.find(image => image.id === page);
+    if (pageImage) {
+      document.getElementById('quranImage').src = pageImage.url;
+      localStorage.setItem('lastReadPage', page);
+    }
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      displayQuranPage(currentPage);
+    }
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      displayQuranPage(currentPage);
+    }
+  });
+
+  // Initial load
+  fetchQuranPages();
+
+let touchstartX = 0;
+let touchendX = 0;
+
+document.addEventListener('touchstart', function(event) {
+    touchstartX = event.changedTouches[0].screenX;
+}, false);
+
+document.addEventListener('touchend', function(event) {
+    touchendX = event.changedTouches[0].screenX;
+    handleGesture();
+}, false);
+
+function handleGesture() {
+    if (touchendX < touchstartX) {
+        // Swiped left
+        previousPage();
+    }
+    
+    if (touchendX > touchstartX) {
+        // Swiped right
+        nextPage();
+    }
+}
+
+function nextPage() {
+    if (currentPage < totalPages) {
+        currentPage++;
+        displayQuranPage(currentPage);
+    }
+}
+
+function previousPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        displayQuranPage(currentPage);
+    }
+}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navbar = document.getElementById('navbar');
+  const dropdowns = document.querySelectorAll('.dropdown');
+  const dropbtns = document.querySelectorAll('.dropbtns');
+
+  // Toggle visibility of the menu navigation
+  menuToggle.addEventListener('click', function () {
+    navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Toggle visibility of dropdown menus and close menu
+  dropdowns.forEach(function (dropdown) {
+    const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+    dropdown.addEventListener('click', function () {
+      if (dropdownContent.style.display === 'block') {
+        dropdownContent.style.display = 'none';
+        navbar.style.display = 'none'; // Close menu
+      } else {
+        dropdownContent.style.display = 'block';
+      }
+    });
+  });
+
+  // Close menu when specified buttons are clicked
+  dropbtns.forEach(function(dropbtn) {
+    dropbtn.addEventListener('click', function() {
+      navbar.style.display = 'none';
+    });
+  });
+});
+
+
+//Function to open the first image of the Quran pages
+function openFirstImage() {
+    currentPage = 1; // Set current page to the first page
+    displayQuranPage(currentPage); // Display the first page
+}
+
+// Attach event listener to the first button
+document.getElementById('firstBtn').addEventListener('click', openFirstImage);
+
+// Function to open a specific page of the Quran pages
+function openPage(pageNumber) {
+    currentPage = pageNumber; // Set current page to the specified page number
+    displayQuranPage(currentPage); // Display the specified page
+}
+
+// Attach event listeners to the buttons for opening specific pages
+document.getElementById('page2Btn').addEventListener('click', () => openPage(2));
+document.getElementById('page22Btn').addEventListener('click', () => openPage(22));
+document.getElementById('page34Btn').addEventListener('click', () => openPage(34));
+document.getElementById('page46Btn').addEventListener('click', () => openPage(46));
+
+</script>
+
+</body>
+</html>
