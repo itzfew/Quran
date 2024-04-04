@@ -2,15 +2,15 @@
   "images": [
     {
       "id": 1,
-      "url": "Quran/001.png"
+      "url": "https://raw.githubusercontent.com/itzfew/Quran/main/Quran/001.png"
     },
     {
       "id": 2,
-      "url": "Quran/002.png"
+      "url": "https://raw.githubusercontent.com/itzfew/Quran/main/Quran/002.png"
     },
     {
       "id": 3,
-      "url": "Quran/003.png"
+      "url": "https://raw.githubusercontent.com/itzfew/Quran/main/Quran/003.png"
     }
   ]
 }
