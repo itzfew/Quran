@@ -15,6 +15,7 @@
             color: #333;
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         header {
@@ -24,6 +25,7 @@
             padding: 15px 20px;
             background-color: #00796b;
             color: #fff;
+            position: relative;
         }
 
         .log h2 {
@@ -31,7 +33,7 @@
             font-size: 24px;
         }
 
-        .darkMode i {
+        .darkMode i, .settings i {
             font-size: 24px;
             cursor: pointer;
         }
@@ -101,18 +103,20 @@
 
         .singleSurah {
             margin-top: 20px;
+            text-align: center;
         }
 
         .singleSurah .name h1 {
             font-size: 32px;
             color: #00796b;
-            text-align: center;
             margin: 0;
         }
 
         .singleSurah .ayat {
             list-style-type: none;
             padding: 0;
+            margin: 0;
+            text-align: center;
         }
 
         .singleSurah .ayat li {
@@ -135,6 +139,49 @@
             font-size: 18px;
             color: #555;
         }
+
+        .settings-panel {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #00796b;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .settings-panel button {
+            background-color: #00796b;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .settings-panel button:hover {
+            background-color: #004d40;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #f0f4f8;
+        }
+
+        .dark-mode .singleSurah .ayat li {
+            background-color: #444;
+            border: 1px solid #555;
+            color: #ccc;
+        }
+
+        .dark-mode .scroll-indicator .bar {
+            background-color: #aaa;
+        }
     </style>
 </head>
 <body>
@@ -146,8 +193,17 @@
         <div class="darkMode">
              <i class="bi bi-moon-fill"></i> 
         </div>
+        <div class="settings">
+            <i class="bi bi-gear"></i>
+        </div>
         <div class="scroll-indicator">
             <div class="bar"></div>
+        </div>
+        <div class="settings-panel">
+            <button id="increaseFontSize">Increase Font Size</button>
+            <button id="decreaseFontSize">Decrease Font Size</button>
+            <button id="resetFontSize">Reset Font Size</button>
+            <!-- Additional settings can be added here -->
         </div>
     </header>
 
@@ -163,6 +219,40 @@
         // Dark Mode Toggle
         document.querySelector('.darkMode').addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
+        });
+
+        // Font Size Adjustment
+        const fontSizeButtons = {
+            increase: document.getElementById('increaseFontSize'),
+            decrease: document.getElementById('decreaseFontSize'),
+            reset: document.getElementById('resetFontSize')
+        };
+
+        let currentFontSize = 16; // Initial font size in pixels
+
+        fontSizeButtons.increase.addEventListener('click', () => {
+            currentFontSize += 2;
+            document.body.style.fontSize = `${currentFontSize}px`;
+        });
+
+        fontSizeButtons.decrease.addEventListener('click', () => {
+            if (currentFontSize > 10) { // Prevent font size from getting too small
+                currentFontSize -= 2;
+                document.body.style.fontSize = `${currentFontSize}px`;
+            }
+        });
+
+        fontSizeButtons.reset.addEventListener('click', () => {
+            currentFontSize = 16; // Reset to initial size
+            document.body.style.fontSize = `${currentFontSize}px`;
+        });
+
+        // Settings Panel Toggle
+        const settingsButton = document.querySelector('.settings');
+        const settingsPanel = document.querySelector('.settings-panel');
+
+        settingsButton.addEventListener('click', () => {
+            settingsPanel.style.display = settingsPanel.style.display === 'block' ? 'none' : 'block';
         });
 
         // Scroll to Top Button
