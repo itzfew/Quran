@@ -1,65 +1,141 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    color: #333;
+    background-color: #f4f4f4;
 }
 
+/* Header */
 header {
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Dark Green */
     color: white;
     text-align: center;
     padding: 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Main Content */
 main {
-    padding: 1rem;
+    padding: 4rem 1rem 1rem; /* Adjusted to account for fixed header */
+    margin-top: 4rem;
 }
 
+/* Search and Sort Container */
 .search-sort-container {
+    display: flex;
+    align-items: center;
     margin-bottom: 1rem;
+    gap: 1rem;
 }
 
 .searchBox {
     padding: 0.5rem;
-    margin-right: 1rem;
     border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
 }
 
 .sortable {
     padding: 0.5rem;
     border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
+/* Surah List */
 .surahList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+    display: block; /* Ensure that items are displayed in block layout */
+    margin: 0 auto; /* Center align the list if you want to set a max-width */
+    max-width: 800px; /* Adjust to your preferred max-width */
 }
 
+/* Surah Card */
 .surahCard {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 250px;
+    display: block; /* Ensure each card takes up the full width available */
+    width: 100%; /* Full width of the container */
     padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-bottom: 1rem; /* Space between cards */
+    border: 1px solid #ddd;
+    border-radius: 8px;
     text-decoration: none;
-    color: black;
-    background-color: #f9f9f9;
+    color: #333;
+    background-color: #fff;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .surahCard:hover {
-    background-color: #e0e0e0;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Card Content */
 .leftInfo, .rightInfo {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
+.leftInfo .num span {
+    font-weight: bold;
+    color: #4CAF50; /* Dark Green */
+}
+
+.leftInfo .name h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.leftInfo .name p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.rightInfo span {
+    font-size: 1rem;
+    color: #333;
+}
+
+.rightInfo p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Loading and No Results */
 .loading, .no-results {
     text-align: center;
     font-size: 1.5rem;
     margin: 2rem 0;
+    color: #4CAF50; /* Dark Green */
+}
+
+.no-results {
+    color: #f44336; /* Red */
+}
+
+/* Scroll Top Button */
+.scrollTop {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: #4CAF50; /* Dark Green */
+    color: white;
+    border-radius: 50%;
+    padding: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.scrollTop:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
