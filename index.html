@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .searchBox {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .sortable {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .surahList {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .surahCard {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s;
+        }
+
+        .surahCard:hover {
+            background-color: #f9f9f9;
+        }
+
+        .leftInfo {
+            display: flex;
+        }
+
+        .num {
+            margin-right: 15px;
+        }
+
+        .name h3 {
+            margin: 0;
+        }
+
+        .name p {
+            margin: 5px 0 0;
+            font-size: 14px;
+        }
+
+        .rightInfo {
+            text-align: right;
+        }
+
+        .loading, .no-results {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Quran Surahs</h1>
+            <div class="controls">
+                <input type="text" class="searchBox" placeholder="Search Surah...">
+                <select class="sortable">
+                    <option value="asc">Sort by Number (Asc)</option>
+                    <option value="desc">Sort by Number (Desc)</option>
+                </select>
+            </div>
+        </header>
+        <main>
+            <div class="surahList"></div>
+        </main>
+    </div>
+
+    <script>
+        const surahList = document.querySelector('.surahList'),
+            searchBox = document.querySelector('.searchBox'),
+            sortable = document.querySelector('.sortable');
+
+        let surahs = [];
+
+        // Fetch data from the Al-Quran API 
+        async function fetchSurahList() {
+            try {
+                const res = await fetch(`https://api.alquran.cloud/v1/surah`);
+                const data = await res.json();
+                surahs = data.data;
+                displaySurahs();
+            } catch (err) {
+                console.error("Error fetching data: " + err);
+            }
+        }
+
+        // Display Surahs based on search and sort criteria
+        function displaySurahs() {
+            let html = '';
+            if (surahs.length === 0) {
+                surahList.innerHTML = `<h2 class="loading">Loading...</h2>`;
+            } else {
+                surahs
+                    .filter((item) => {
+                        return item.englishName.toLowerCase().includes(searchBox.value.toLowerCase());
+                    })
+                    .sort((a, b) => {
+                        if (sortable.value === 'asc') {
+                            return a.number - b.number;
+                        } else if (sortable.value === 'desc') {
+                            return b.number - a.number;
+                        }
+                    })
+                    .forEach((item) => {
+                        html += `
+                        <a href="singleSurah.html?id=${item.number}" class="surahCard">
+                        <div class="leftInfo">
+                            <div class="num">
+                                <span>${item.number}</span>
+                            </div>
+                            <div class="name">
+                                <h3>${item.englishName}</h3>
+                                <p>${item.englishNameTranslation}</p>
+                            </div>
+                        </div>
+                        <div class="rightInfo">
+                            <span>${item.name}</span>
+                            <p>${item.numberOfAyahs} Verses</p>
+                        </div>
+                        </a>
+                        `;
+                    });
+
+                surahList.innerHTML = html;
+                if (html === '') {
+                    surahList.innerHTML = `<h2 class="no-results">No Results Found</h2>`;
+                }
+            }
+        }
+
+        // Event listeners for search and sort
+        searchBox.addEventListener('input', displaySurahs);
+        sortable.addEventListener('change', displaySurahs);
+
+        // Initial data fetch
+        fetchSurahList();
+    </script>
+</body>
+</html>
