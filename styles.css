@@ -1,52 +1,65 @@
-/* styles.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-}
-
-.controls {
-    margin-bottom: 20px;
-}
-
-.controls label {
-    margin-right: 10px;
-}
-
-.controls input, .controls select, .controls button {
-    margin-right: 10px;
-}
-
-button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
+header {
+    background-color: #4CAF50;
     color: white;
-    cursor: pointer;
+    text-align: center;
+    padding: 1rem;
+}
+
+main {
+    padding: 1rem;
+}
+
+.search-sort-container {
+    margin-bottom: 1rem;
+}
+
+.searchBox {
+    padding: 0.5rem;
+    margin-right: 1rem;
+    border: 1px solid #ccc;
+}
+
+.sortable {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+}
+
+.surahList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.surahCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+    padding: 1rem;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    background-color: #f9f9f9;
 }
 
-button:hover {
-    background-color: #0056b3;
+.surahCard:hover {
+    background-color: #e0e0e0;
 }
 
-.content {
-    margin-top: 20px;
+.leftInfo, .rightInfo {
+    display: flex;
+    justify-content: space-between;
 }
 
-#quran-content {
-    white-space: pre-wrap; /* Preserve whitespace formatting */
+.loading, .no-results {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 2rem 0;
 }
