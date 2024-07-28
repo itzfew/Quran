@@ -1,28 +1,19 @@
-import { displaySurahs, fetchSurahList } from './surahList.js';
-import { darkMode } from './darkMode.js';
-import { scrollBar, scrollTop } from './scrollEfect.js';
+const surahListContainer = document.querySelector('.surah-list');
 
-const log = document.querySelector('.log');
-
-log.addEventListener('click', () => {
-    window.history.back();
-});
-
-async function initialize() {
+async function fetchSurahs() {
     try {
-        await fetchSurahList();
+        const response = await fetch('https://itzfew.github.io/Quranapp/surah.json');
+        const surahs = await response.json();
+        
+        surahListContainer.innerHTML = surahs.map(surah => `
+            <div class="surah-item">
+                <a href="singleSurah.html?id=${surah.index}">${surah.title} (${surah.index})</a>
+            </div>
+        `).join('');
     } catch (error) {
-        console.log('Failed to fetch surah list, loading from cache.');
-        // Load cached data or show a friendly offline message
-        surahList.innerHTML = '<p>Unable to load surah list. Please check your internet connection.</p>';
+        console.error('Error fetching Surahs:', error);
+        surahListContainer.innerHTML = '<p class="no-results">Failed to load Surah list</p>';
     }
 }
 
-initialize();
-
-// Initialize dark mode functionality
-darkMode();
-
-// Initialize scroll effects
-scrollBar();
-scrollTop();
+fetchSurahs();
