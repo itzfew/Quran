@@ -6,88 +6,118 @@
     <title>Quran App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f2f5;
+            color: #333;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         header {
             text-align: center;
+            margin-bottom: 20px;
         }
 
         header h1 {
-            margin-bottom: 20px;
+            margin: 0;
+            font-size: 2.5em;
+            color: #4a90e2;
         }
 
         .controls {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             gap: 10px;
             margin-bottom: 20px;
         }
 
-        .searchBox {
+        .searchBox, .sortable {
             padding: 10px;
             font-size: 16px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .searchBox {
+            border-color: #4a90e2;
         }
 
         .sortable {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border-color: #ddd;
+            background-color: #f7f9fc;
         }
 
         .surahList {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
         }
 
         .surahCard {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 15px;
             background-color: #fff;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
             text-decoration: none;
             color: #333;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .surahCard:hover {
-            background-color: #f9f9f9;
+            background-color: #f4f6f9;
+            transform: translateY(-2px);
         }
 
         .leftInfo {
             display: flex;
+            align-items: center;
         }
 
         .num {
+            font-size: 18px;
+            font-weight: bold;
             margin-right: 15px;
+            color: #4a90e2;
         }
 
         .name h3 {
             margin: 0;
+            font-size: 18px;
+            color: #333;
         }
 
         .name p {
             margin: 5px 0 0;
             font-size: 14px;
+            color: #666;
         }
 
         .rightInfo {
             text-align: right;
+            font-size: 16px;
+        }
+
+        .rightInfo span {
+            display: block;
+            font-size: 20px;
+            font-weight: bold;
+            color: #4a90e2;
         }
 
         .loading, .no-results {
