@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Existing meta and link tags here -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    /* Existing CSS styles here */
+    
+    .bookmarks-btn {
+      position: fixed;
+      right: 80px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 36px;
+      color: #007bff;
+      cursor: pointer;
+      transition: color 0.3s;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .bookmarks-btn:hover {
+      color: #0056b3;
+    }
+
+    .bookmarks-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bookmarks-modal-content {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .bookmarks-list {
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+
+    .bookmark-item {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+    }
+
+    .bookmark-item:last-child {
+      border-bottom: none;
+    }
+
+    .bookmark-item:hover {
+      background: #f0f0f0;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #007bff;
+    }
+
+    .modal-close:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="quran-page-container" id="quranPageContainer">
+      <!-- Pages will be dynamically added here -->
+    </div>
+  </div>
+
+  <!-- Existing elements here -->
+
+  <i id="bookmarkBtn" class="far fa-bookmark bookmark-btn"></i>
+
+  <!-- New bookmarks button -->
+  <i id="bookmarksBtn" class="fas fa-bookmark bookmarks-btn"></i>
+
+  <!-- New bookmarks modal -->
+  <div class="bookmarks-modal" id="bookmarksModal">
+    <div class="bookmarks-modal-content">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <h2>Bookmarked Pages</h2>
+      <div class="bookmarks-list" id="bookmarksList">
+        <!-- Bookmark items will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Existing JavaScript here
+
+    function showBookmarks() {
+      const modal = document.getElementById('bookmarksModal');
+      const list = document.getElementById('bookmarksList');
+      list.innerHTML = '';
+
+      if (bookmarks.length === 0) {
+        list.innerHTML = '<p>No bookmarks available.</p>';
+      } else {
+        bookmarks.forEach(pageIndex => {
+          const bookmarkItem = document.createElement('div');
+          bookmarkItem.className = 'bookmark-item';
+          bookmarkItem.innerText = `Page ${pageIndex + 1}`;
+          bookmarkItem.onclick = () => {
+            currentPage = pageIndex + 1;
+            updatePage();
+            modal.style.display = 'none';
+          };
+          list.appendChild(bookmarkItem);
+        });
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function hideBookmarks() {
+      const modal = document.getElementById('bookmarksModal');
+      modal.style.display = 'none';
+    }
+
+    document.getElementById('bookmarksBtn').addEventListener('click', showBookmarks);
+    document.getElementById('modalClose').addEventListener('click', hideBookmarks);
+
+    // Initialize bookmarks button and modal on load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateBookmarkIcon();
+    });
+  </script>
+</body>
+</html>
