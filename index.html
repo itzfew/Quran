@@ -1,390 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quran Pages</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quran Pages</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #f4f4f9;
+    }
 
-  <div class="menu-toggle">
-  <div class="menu-bar"></div>
-  <div class="menu-bar"></div>
-  <div class="menu-bar"></div>
-</div>
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
 
-<div class="navbar" id="navbar">
-  <div class="dropdown">
-    
-       <button class="dropbtns" id="firstBtn" onclick="openFirstImage()">Restart</button>
-  </div>
-  <div class="dropdown">
-    <button class="dropbtn">Para List</button>
-    <div class="dropdown-content">
-<a><button onclick="openPage(2)">Alif Laam Meem</button></a>
-<a><button onclick="openPage(22)">Saqawool</button></a>
-<a><button onclick="openPage(3)">Tilka</button></a>
-<a><button onclick="openPage(4)">Yunus</button></a>
-<a><button onclick="openPage(5)">Ha Meem</button></a>
-<a><button onclick="openPage(6)">Wa Qaloo</button></a>
-<a><button onclick="openPage(7)">Wa Qaloo</button></a>
-<a><button onclick="openPage(8)">Wa Law Annana</button></a>
-<a><button onclick="openPage(9)">Qad Aflaha</button></a>
-<a><button onclick="openPage(10)">Wa A'lamoo</button></a>
-<a><button onclick="openPage(11)">Yatafakkaroon</button></a>
-<a><button onclick="openPage(12)">Wa Maa Ubarri'u</button></a>
-<a><button onclick="openPage(13)">Wa Maa Ubarri'u</button></a>
-<a><button onclick="openPage(14)">Rubama</button></a>
-<a><button onclick="openPage(15)">Subhana</button></a>
-<a><button onclick="openPage(16)">Qala A'rabu</button></a>
-<a><button onclick="openPage(17)">Aqtarabat</button></a>
-<a><button onclick="openPage(18)">Qad Aflaha</button></a>
-<a><button onclick="openPage(19)">Wa Qaloo</button></a>
-<a><button onclick="openPage(20)">Amman</button></a>
-<a><button onclick="openPage(21)">Ata Mal</button></a>
-<a><button onclick="openPage(22)">Yataasaa'aloon</button></a>
-<a><button onclick="openPage(23)">Wa Maa Min</button></a>
-<a><button onclick="openPage(24)">Wa Man Yattaqi</button></a>
-<a><button onclick="openPage(25)">Fa Man Adhlamu</button></a>
-<a><button onclick="openPage(26)">Ha Meem</button></a>
-<a><button onclick="openPage(27)">Qala Fa'ma</button></a>
-<a><button onclick="openPage(28)">Qad Sami'a</button></a>
-<a><button onclick="openPage(29)">Tabaarak</button></a>
-<a><button onclick="openPage(30)">Amma</button></a>
+    .quran-page-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+      transform: translateX(0%);
+    }
 
-    </div>
-  </div>
-</div>
-<style>
-/* Adjustments for mobile devices */
+    .quran-page {
+      flex: 1 0 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border: 5px solid #333;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transition: transform 0.8s ease, box-shadow 0.4s ease;
+    }
 
-/* Set max-width for body */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-}
+    .quran-page img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 20px;
+    }
 
-/* Set max-width for containers */
-.containers,
-.container {
-  max-width: 100%;
-  margin: 0;
-  padding: 20px;
-}
+    .page-info {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: #333;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.5s ease;
+    }
 
-/* Adjust Quran page container margin for mobile */
-.quran-page-container {
-  position: relative;
-  margin-bottom: 20px; /* Adjust for fixed navigation buttons */
-}
+    .page-progress {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-/* Adjust Quran image for mobile */
-.quran-image {
-  max-width: 100%;
-  height: auto;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
+    .page-progress-bar {
+      height: 100%;
+      background: #007bff;
+      width: 0;
+      transition: width 0.5s ease;
+    }
 
-/* Adjust navigation buttons for mobile */
-.navigation-btns {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #fff;
-  border-top: 1px solid #ccc;
-  padding: 10px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .navigation-btns {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
 
-/* Adjust button styles for mobile */
-.btn {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
+    .nav-icon {
+      font-size: 36px;
+      color: #007bff;
+      cursor: pointer;
+      transition: color 0.3s, opacity 0.5s;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-/* Original CSS */
+    .nav-icon:hover {
+      color: #0056b3;
+    }
 
-.menu-toggle {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  padding: 10px;
-}
+    .fullscreen-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 36px;
+      color: #007bff;
+      cursor: pointer;
+      transition: color 0.3s;
+      z-index: 10;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-.menu-bar {
-  width: 30px;
-  height: 3px;
-  background-color: #333;
-  margin: 5px 0;
-}
+    .fullscreen-btn:hover {
+      color: #0056b3;
+    }
 
-.navbar {
-  display: none;
-  overflow: hidden;
-  background-color: #333;
-}
+    .bookmark-btn {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 36px;
+      color: #007bff;
+      cursor: pointer;
+      transition: color 0.3s;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-.dropbtn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  color: white;
-  background-color: inherit;
-  margin: 0;
-  padding: 14px 16px;
-}
-
-.dropbtns {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  color: white;
-  background-color: inherit;
-  margin: 0;
-  padding: 14px 16px;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #333;
-  min-width: 160px;
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: white;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #444;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-.dropdown-content {
-  max-height: 200px; /* Adjust the maximum height as needed */
-  overflow-y: auto; /* Enable vertical scrolling */
-}
-
-/* Optional: Adjust the scrollbar styles */
-.dropdown-content::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
-}
-
-.dropdown-content::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2); /* Color of the scrollbar thumb */
-  border-radius: 4px; /* Rounded corners of the scrollbar thumb */
-}
-
-</style>
+    .bookmark-btn:hover {
+      color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-<div class="containers">
-<div class="container">
-  <div class="quran-page-container">
-    <div id="quranPage" class="quran-page">
-      <img id="quranImage" class="quran-image" src="" alt="Quran Page">
+  <div class="container">
+    <div class="quran-page-container" id="quranPageContainer">
+      <!-- Pages will be dynamically added here -->
     </div>
   </div>
-</div>
 
-<div class="navigation-btns">
-  <button id="nextBtn" class="btn">Next Page</button>
-<button id="prevBtn" class="btn">Previous Page</button>
+  <div class="page-info" id="pageInfo">Page 1</div>
 
-</div>
+  <div class="page-progress">
+    <div class="page-progress-bar" id="pageProgressBar"></div>
+  </div>
 
-<script>
-  let currentPage = 1;
-  let totalPages = 0;
-  let images = [];
-  let lastReadPage = localStorage.getItem('lastReadPage');
+  <div class="navigation-btns">
+    <i id="prevBtn" class="fas fa-chevron-left nav-icon"></i>
+    <i id="nextBtn" class="fas fa-chevron-right nav-icon"></i>
+  </div>
 
-  // Function to fetch Quran pages from the provided JSON file or cache
-  function fetchQuranPages() {
-    if ('caches' in window) {
-      caches.match('pages.json').then(response => {
-        if (response) {
-          return response.json();
-        }
-      }).then(data => {
-        if (data) {
+  <i id="fullscreenBtn" class="fas fa-expand fullscreen-btn"></i>
+
+  <div class="bookmark-btn" id="bookmarkBtn">
+    <i class="far fa-bookmark"></i>
+  </div>
+
+  <script>
+    const CACHE_NAME = 'quran-pages-cache-v1';
+    const urlsToCache = [
+      '/',
+      '/index.html',
+      '/manifest.json',
+      'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css',
+      '/icon/192x192.png',
+      '/icon/512x512.png',
+    ];
+
+    let currentPage = 1;
+    let totalPages = 0;
+    let images = [];
+    let lastReadPage = localStorage.getItem('lastReadPage');
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+
+    function fetchQuranPages() {
+      fetch('https://raw.githubusercontent.com/itzfew/Quran/main/pages.json')
+        .then(response => response.json())
+        .then(data => {
           images = data.images;
           totalPages = images.length;
           if (lastReadPage && lastReadPage <= totalPages) {
             currentPage = parseInt(lastReadPage);
           }
-          displayQuranPage(currentPage);
-        } else {
-          fetchPagesFromServer();
-        }
-      }).catch(error => {
-        console.error('Error fetching Quran pages from cache:', error);
-        fetchPagesFromServer();
+          cacheImages(images.map(image => image.url)); // Cache images
+          displayQuranPages();
+          updateBookmarkIcon(); // Update bookmark icon on initial load
+        })
+        .catch(error => {
+          console.error('Error fetching Quran pages:', error);
+          displayQuranPages(); // Display pages if offline
+        });
+    }
+
+    function cacheImages(urls) {
+      if ('caches' in window) {
+        caches.open(CACHE_NAME).then(cache => {
+          urls.forEach(url => cache.add(url));
+        });
+      }
+    }
+
+    function displayQuranPages() {
+      const container = document.getElementById('quranPageContainer');
+      container.innerHTML = '';
+
+      images.forEach((image) => {
+        const page = document.createElement('div');
+        page.className = 'quran-page';
+        page.innerHTML = `<img class="quran-image" src="${image.url}" alt="Quran Page ${image.id}">`;
+        container.appendChild(page);
       });
-    } else {
-      fetchPagesFromServer();
+
+      updatePage();
     }
-  }
 
-  // Function to fetch Quran pages from the server
-  function fetchPagesFromServer() {
-    fetch('https://raw.githubusercontent.com/itzfew/Quran/main/pages.json')
-      .then(response => response.json())
-      .then(data => {
-        images = data.images;
-        totalPages = images.length;
-        if (lastReadPage && lastReadPage <= totalPages) {
-          currentPage = parseInt(lastReadPage);
-        }
-        displayQuranPage(currentPage);
-        cacheQuranPages(data);
-      })
-      .catch(error => console.error('Error fetching Quran pages from server:', error));
-  }
+    function updatePage() {
+      const container = document.getElementById('quranPageContainer');
+      container.style.transform = `translateX(-${(currentPage - 1) * 100}%)`;
+      document.getElementById('pageInfo').innerText = `Page ${currentPage} of ${totalPages}`;
+      document.getElementById('pageProgressBar').style.width = `${(currentPage / totalPages) * 100}%`;
+      localStorage.setItem('lastReadPage', currentPage);
+      showPageInfo();
+      updateBookmarkIcon();
+    }
 
-  // Function to cache Quran pages for offline use
-  function cacheQuranPages(data) {
-    if ('caches' in window) {
-      caches.open('quran-pages-v1').then(cache => {
-        cache.addAll(['pages.json']);
+    function showPageInfo() {
+      const pageInfo = document.getElementById('pageInfo');
+      pageInfo.style.opacity = 1;
+      clearTimeout(window.pageInfoTimeout);
+      window.pageInfoTimeout = setTimeout(() => {
+        pageInfo.style.opacity = 0;
+      }, 3000); // Hide after 3 seconds
+    }
+
+    function showNavButtons() {
+      document.querySelectorAll('.nav-icon').forEach(button => {
+        button.style.opacity = 1;
       });
+      clearTimeout(window.navButtonsTimeout);
+      window.navButtonsTimeout = setTimeout(() => {
+        document.querySelectorAll('.nav-icon').forEach(button => {
+          button.style.opacity = 0;
+        });
+      }, 3000); // Hide after 3 seconds
     }
-  }
 
-  // Function to display Quran page for the specified page number
-  function displayQuranPage(page) {
-    const pageImage = images.find(image => image.id === page);
-    if (pageImage) {
-      document.getElementById('quranImage').src = pageImage.url;
-      localStorage.setItem('lastReadPage', page);
-    }
-  }
-
-  document.getElementById('prevBtn').addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      displayQuranPage(currentPage);
-    }
-  });
-
-  document.getElementById('nextBtn').addEventListener('click', () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      displayQuranPage(currentPage);
-    }
-  });
-
-  // Initial load
-  fetchQuranPages();
-
-let touchstartX = 0;
-let touchendX = 0;
-
-document.addEventListener('touchstart', function(event) {
-    touchstartX = event.changedTouches[0].screenX;
-}, false);
-
-document.addEventListener('touchend', function(event) {
-    touchendX = event.changedTouches[0].screenX;
-    handleGesture();
-}, false);
-
-function handleGesture() {
-    if (touchendX < touchstartX) {
-        // Swiped left
-        previousPage();
-    }
-    
-    if (touchendX > touchstartX) {
-        // Swiped right
-        nextPage();
-    }
-}
-
-function nextPage() {
-    if (currentPage < totalPages) {
-        currentPage++;
-        displayQuranPage(currentPage);
-    }
-}
-
-function previousPage() {
-    if (currentPage > 1) {
-        currentPage--;
-        displayQuranPage(currentPage);
-    }
-}
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navbar = document.getElementById('navbar');
-  const dropdowns = document.querySelectorAll('.dropdown');
-  const dropbtns = document.querySelectorAll('.dropbtns');
-
-  // Toggle visibility of the menu navigation
-  menuToggle.addEventListener('click', function () {
-    navbar.style.display = navbar.style.display === 'block' ? 'none' : 'block';
-  });
-
-  // Toggle visibility of dropdown menus and close menu
-  dropdowns.forEach(function (dropdown) {
-    const dropdownContent = dropdown.querySelector('.dropdown-content');
-
-    dropdown.addEventListener('click', function () {
-      if (dropdownContent.style.display === 'block') {
-        dropdownContent.style.display = 'none';
-        navbar.style.display = 'none'; // Close menu
+    function toggleBookmark() {
+      const pageIndex = currentPage - 1;
+      if (bookmarks.includes(pageIndex)) {
+        bookmarks = bookmarks.filter(bookmark => bookmark !== pageIndex);
       } else {
-        dropdownContent.style.display = 'block';
+        bookmarks.push(pageIndex);
+      }
+      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+      updateBookmarkIcon();
+    }
+
+    function updateBookmarkIcon() {
+      const bookmarkBtn = document.getElementById('bookmarkBtn');
+      const pageIndex = currentPage - 1;
+      if (bookmarks.includes(pageIndex)) {
+        bookmarkBtn.querySelector('i').classList.add('fas');
+        bookmarkBtn.querySelector('i').classList.remove('far');
+      } else {
+        bookmarkBtn.querySelector('i').classList.add('far');
+        bookmarkBtn.querySelector('i').classList.remove('fas');
+      }
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        updatePage();
+      }
+      showNavButtons();
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        updatePage();
+      }
+      showNavButtons();
+    });
+
+    let startX = 0;
+    let endX = 0;
+
+    document.addEventListener('touchstart', event => {
+      startX = event.changedTouches[0].screenX;
+    }, false);
+
+    document.addEventListener('touchend', event => {
+      endX = event.changedTouches[0].screenX;
+      if (endX < startX) {
+        // Swiped left - Show next page
+        if (currentPage < totalPages) {
+          currentPage++;
+          updatePage();
+        }
+      } else if (endX > startX) {
+        // Swiped right - Show previous page
+        if (currentPage > 1) {
+          currentPage--;
+          updatePage();
+        }
+      }
+      showPageInfo();
+      showNavButtons();
+    }, false);
+
+    document.getElementById('fullscreenBtn').addEventListener('click', () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+        document.getElementById('fullscreenBtn').classList.replace('fa-compress', 'fa-expand');
+      } else {
+        document.documentElement.requestFullscreen();
+        document.getElementById('fullscreenBtn').classList.replace('fa-expand', 'fa-compress');
       }
     });
-  });
 
-  // Close menu when specified buttons are clicked
-  dropbtns.forEach(function(dropbtn) {
-    dropbtn.addEventListener('click', function() {
-      navbar.style.display = 'none';
+    document.getElementById('bookmarkBtn').addEventListener('click', () => {
+      toggleBookmark();
     });
-  });
-});
 
+    fetchQuranPages();
 
-//Function to open the first image of the Quran pages
-function openFirstImage() {
-    currentPage = 1; // Set current page to the first page
-    displayQuranPage(currentPage); // Display the first page
-}
+    // Show navigation buttons and page info initially
+    document.querySelectorAll('.nav-icon').forEach(button => {
+      button.style.opacity = 1;
+    });
+    document.getElementById('pageInfo').style.opacity = 1;
 
-// Attach event listener to the first button
-document.getElementById('firstBtn').addEventListener('click', openFirstImage);
-
-// Function to open a specific page of the Quran pages
-function openPage(pageNumber) {
-    currentPage = pageNumber; // Set current page to the specified page number
-    displayQuranPage(currentPage); // Display the specified page
-}
-
-// Attach event listeners to the buttons for opening specific pages
-document.getElementById('page2Btn').addEventListener('click', () => openPage(2));
-document.getElementById('page22Btn').addEventListener('click', () => openPage(22));
-document.getElementById('page34Btn').addEventListener('click', () => openPage(34));
-document.getElementById('page46Btn').addEventListener('click', () => openPage(46));
-
-</script>
-
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+  </script>
 </body>
 </html>
