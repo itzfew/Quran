@@ -1,57 +1,49 @@
-// singleSurah.js
-
 const main = document.querySelector('main');
 
-// Extract the 'id' parameter from the URL
-const id = new URLSearchParams(window.location.search).get('id');
+// Extract the Surah ID from the URL query parameters
+export const id = new URLSearchParams(window.location.search).get('id');
 
-// Function to fetch and display a single Surah
+// Fetch and display details for a single Surah
 export async function fetchSingleSurah(api) {
     try {
-        // Fetch data from the API
+        // Fetch the data from the API
         const res = await fetch(api);
+        
+        // Check if the response is okay
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        
         const { data } = await res.json();
-        const { ayahs } = data;
-
-        // Generate HTML content for the Surah
+        const { ayahs, englishName, revelationType, numberOfAyahs, name } = data;
+        
+        // Generate HTML content for the Surah details
         main.innerHTML = `
             <div class="surahInfo">
                 <div class="name">
-                    <h4>${data.englishName}</h4>
+                    <h4>${englishName}</h4>
                 </div>
                 <div class="info">
-                    <p>
-                        <span>Revelation: ${data.revelationType}</span> /
-                        <span>Number of Ayahs: ${data.numberOfAyahs}</span>
-                    </p>
+                    <p><span>Revelation: ${revelationType}</span> / <span>Number of Ayahs: ${numberOfAyahs}</span></p>
                 </div>
             </div>
             <hr/>
             <div class="singleSurah">
                 <div class="name">
-                    <h1>${data.name}</h1>
+                    <h1>${name}</h1>
                 </div>
                 <ul class="ayat">
-                    ${
-                        ayahs
-                        .map(item => `
-                            <li>
-                                <span>(${item.numberInSurah})</span> - ${item.text}
-                            </li>
-                        `)
-                        .join('')
-                    }
+                    ${ayahs.map(item => `
+                        <li><span>(${item.numberInSurah})</span> - ${item.text}</li>
+                    `).join('')}
                 </ul>
             </div>
         `;
-    } catch (err) {
-        console.error("Error fetching Surah data: " + err);
-        main.innerHTML = `<h2 class="no-results">Failed to load Surah</h2>`;
+    } catch (error) {
+        console.error('Error fetching Surah details:', error);
+        main.innerHTML = `<h2 class="error">Error loading Surah details. Please try again later.</h2>`;
     }
 }
 
-// Construct the API URL using the Surah id
-const api = `https://api.alquran.cloud/v1/surah/${id}`;
-
-// Fetch and display the Surah
-fetchSingleSurah(api);
+// Call the function with the appropriate API endpoint
+fetchSingleSurah(`https://api.alquran.cloud/v1/surah/${id}`);
