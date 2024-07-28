@@ -3,216 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quran App</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f2f5;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #4a90e2;
-        }
-
-        .controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .searchBox, .sortable {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .searchBox {
-            border-color: #4a90e2;
-        }
-
-        .sortable {
-            border-color: #ddd;
-            background-color: #f7f9fc;
-        }
-
-        .surahList {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .surahCard {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .surahCard:hover {
-            background-color: #f4f6f9;
-            transform: translateY(-2px);
-        }
-
-        .leftInfo {
-            display: flex;
-            align-items: center;
-        }
-
-        .num {
-            font-size: 18px;
-            font-weight: bold;
-            margin-right: 15px;
-            color: #4a90e2;
-        }
-
-        .name h3 {
-            margin: 0;
-            font-size: 18px;
-            color: #333;
-        }
-
-        .name p {
-            margin: 5px 0 0;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .rightInfo {
-            text-align: right;
-            font-size: 16px;
-        }
-
-        .rightInfo span {
-            display: block;
-            font-size: 20px;
-            font-weight: bold;
-            color: #4a90e2;
-        }
-
-        .loading, .no-results {
-            text-align: center;
-            font-size: 18px;
-            color: #555;
-        }
-    </style>
+    <title>Quran Viewer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Quran Surahs</h1>
-            <div class="controls">
-                <input type="text" class="searchBox" placeholder="Search Surah...">
-                <select class="sortable">
-                    <option value="asc">Sort by Number (Asc)</option>
-                    <option value="desc">Sort by Number (Desc)</option>
-                </select>
-            </div>
-        </header>
-        <main>
-            <div class="surahList"></div>
-        </main>
+        <h1>Quran Viewer</h1>
+        <div class="controls">
+            <label for="page">Page:</label>
+            <input type="number" id="page" min="1" max="604" value="1">
+            
+            <label for="edition">Translation:</label>
+            <select id="edition">
+                <option value="quran-uthmani">Uthmani Script</option>
+                <option value="en.asad">Muhammad Asad (English)</option>
+                <!-- Add more translations if needed -->
+            </select>
+            
+            <button id="fetch">Fetch Page</button>
+        </div>
+        
+        <div class="content">
+            <h2>Page Content</h2>
+            <div id="quran-content"></div>
+        </div>
     </div>
-
-    <script>
-        const surahList = document.querySelector('.surahList'),
-            searchBox = document.querySelector('.searchBox'),
-            sortable = document.querySelector('.sortable');
-
-        let surahs = [];
-
-        // Fetch data from the Al-Quran API 
-        async function fetchSurahList() {
-            try {
-                const res = await fetch(`https://api.alquran.cloud/v1/surah`);
-                const data = await res.json();
-                surahs = data.data;
-                displaySurahs();
-            } catch (err) {
-                console.error("Error fetching data: " + err);
-            }
-        }
-
-        // Display Surahs based on search and sort criteria
-        function displaySurahs() {
-            let html = '';
-            if (surahs.length === 0) {
-                surahList.innerHTML = `<h2 class="loading">Loading...</h2>`;
-            } else {
-                surahs
-                    .filter((item) => {
-                        return item.englishName.toLowerCase().includes(searchBox.value.toLowerCase());
-                    })
-                    .sort((a, b) => {
-                        if (sortable.value === 'asc') {
-                            return a.number - b.number;
-                        } else if (sortable.value === 'desc') {
-                            return b.number - a.number;
-                        }
-                    })
-                    .forEach((item) => {
-                        html += `
-                        <a href="singleSurah.html?id=${item.number}" class="surahCard">
-                        <div class="leftInfo">
-                            <div class="num">
-                                <span>${item.number}</span>
-                            </div>
-                            <div class="name">
-                                <h3>${item.englishName}</h3>
-                                <p>${item.englishNameTranslation}</p>
-                            </div>
-                        </div>
-                        <div class="rightInfo">
-                            <span>${item.name}</span>
-                            <p>${item.numberOfAyahs} Verses</p>
-                        </div>
-                        </a>
-                        `;
-                    });
-
-                surahList.innerHTML = html;
-                if (html === '') {
-                    surahList.innerHTML = `<h2 class="no-results">No Results Found</h2>`;
-                }
-            }
-        }
-
-        // Event listeners for search and sort
-        searchBox.addEventListener('input', displaySurahs);
-        sortable.addEventListener('change', displaySurahs);
-
-        // Initial data fetch
-        fetchSurahList();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
