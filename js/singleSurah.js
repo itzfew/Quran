@@ -1,39 +1,42 @@
+// singleSurah.js
+
 const main = document.querySelector('main');
 
 // Extract the 'id' parameter from the URL
 const id = new URLSearchParams(window.location.search).get('id');
 
 // Function to fetch and display a single Surah
-async function fetchSingleSurah(api) {
+export async function fetchSingleSurah(api) {
     try {
         // Fetch data from the API
         const res = await fetch(api);
-        if (!res.ok) throw new Error('Network response was not ok');
-        const surahData = await res.json();
+        const { data } = await res.json();
+        const { ayahs } = data;
 
         // Generate HTML content for the Surah
         main.innerHTML = `
             <div class="surahInfo">
                 <div class="name">
-                    <h4>${surahData.name}</h4>
+                    <h4>${data.englishName}</h4>
                 </div>
                 <div class="info">
                     <p>
-                        <span>Number of Ayahs: ${surahData.ayahs.length}</span>
+                        <span>Revelation: ${data.revelationType}</span> /
+                        <span>Number of Ayahs: ${data.numberOfAyahs}</span>
                     </p>
                 </div>
             </div>
             <hr/>
             <div class="singleSurah">
                 <div class="name">
-                    <h1>${surahData.name}</h1>
+                    <h1>${data.name}</h1>
                 </div>
                 <ul class="ayat">
                     ${
-                        surahData.ayahs
-                        .map(ayah => `
+                        ayahs
+                        .map(item => `
                             <li>
-                                <span>(${ayah.number})</span> - ${ayah.text}
+                                <span>(${item.numberInSurah})</span> - ${item.text}
                             </li>
                         `)
                         .join('')
@@ -48,7 +51,7 @@ async function fetchSingleSurah(api) {
 }
 
 // Construct the API URL using the Surah id
-const api = `https://itzfew.github.io/Quranapp/data/surah/surah_${id}.json`;
+const api = `https://api.alquran.cloud/v1/surah/${id}`;
 
 // Fetch and display the Surah
 fetchSingleSurah(api);
