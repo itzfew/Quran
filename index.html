@@ -370,6 +370,46 @@
           });
       });
     }
+    // Show bookmarks list when bookmarks button is clicked
+function showBookmarks() {
+  const modal = document.getElementById('bookmarksModal');
+  const list = document.getElementById('bookmarksList');
+  list.innerHTML = '';
+
+  if (bookmarks.length === 0) {
+    list.innerHTML = '<p>No bookmarks available.</p>';
+  } else {
+    bookmarks.forEach(pageIndex => {
+      const bookmarkItem = document.createElement('div');
+      bookmarkItem.className = 'bookmark-item';
+      bookmarkItem.innerText = `Page ${pageIndex + 1}`;
+      bookmarkItem.onclick = () => {
+        currentPage = pageIndex + 1;
+        updatePage();
+        modal.style.display = 'none';
+      };
+      list.appendChild(bookmarkItem);
+    });
+  }
+
+  modal.style.display = 'flex';
+}
+
+// Hide bookmarks modal when close button is clicked
+function hideBookmarks() {
+  const modal = document.getElementById('bookmarksModal');
+  modal.style.display = 'none';
+}
+
+// Event listeners for bookmarks button and modal close button
+document.getElementById('bookmarksBtn').addEventListener('click', showBookmarks);
+document.getElementById('modalClose').addEventListener('click', hideBookmarks);
+
+// Initialize bookmarks button and modal on load
+document.addEventListener('DOMContentLoaded', () => {
+  updateBookmarkIcon();
+});
+
   </script>
 </body>
 </html>
