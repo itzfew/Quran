@@ -3,31 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quran Viewer</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Online Quran</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./img/Logo@192x192.ico" type="image/x-icon">
+    <script type="module" src="./js/main.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Quran Viewer</h1>
-        <div class="controls">
-            <label for="page">Page:</label>
-            <input type="number" id="page" min="1" max="604" value="1">
-            
-            <label for="edition">Translation:</label>
-            <select id="edition">
-                <option value="quran-uthmani">Uthmani Script</option>
-                <option value="en.asad">Muhammad Asad (English)</option>
-                <!-- Add more translations if needed -->
-            </select>
-            
-            <button id="fetch">Fetch Page</button>
+    <header>
+        <div class="log">
+            <!-- <img src="img/google.png" alt="google"> -->
+            <i class="bi bi-list"></i>
+            <h2>Online Quran</h2>
         </div>
-        
-        <div class="content">
-            <h2>Page Content</h2>
-            <div id="quran-content"></div>
+        <div class="darkMode">
+             <i class="bi bi-moon-fill"></i> 
         </div>
+        <div class="scroll-indicator">
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="filtarable">
+            <div class="searchBox">
+                <input type="search" name="" id="" placeholder="search Surah" >
+            </div>
+            <div class="sortable">
+                <select id="select-order">
+                    <!-- <option  disabled selected>Sort By</option> -->
+                    <option value="asc" selected> Ascending </option>
+                    <option value="desc">Descending</option>
+                </select>
+            </div>
+        </div>
+        <div class="surahList">
+            <!-- Dynamically Surah List render -->
+         </div>
+
+       
+    </main>
+    <div class="scrollTop">
+        <i class="bi bi-arrow-up-circle"></i>
     </div>
-    <script src="script.js"></script>
+    <footer>
+        <p> Created by <span> <a href="https://github.com/AbdurRaahimm" target="_blank">Abdur Rahim </a></span> Inspired by <span>Quran.com</span> </p>
+    </footer>
+    
 </body>
 </html>
