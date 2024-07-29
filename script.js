@@ -1,4 +1,4 @@
-const surahList = document.querySelector('.surahList');
+ const surahList = document.querySelector('.surahList');
 const searchBox = document.querySelector('.searchBox');
 const sortable = document.querySelector('.sortable');
 
