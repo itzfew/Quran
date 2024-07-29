@@ -6,7 +6,7 @@
     <title>Surah Details - Online Quran</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="./img/Logo@192x192.ico" type="image/x-icon">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-DjPLZ1iFg3VGB58RMXqPQeK5uvV1GJpsEtxOmZSHoXsoKApXZ5i04s3O4wE2mlrAV+rYbVX3uKP+Kr23T/W1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-DjPLZ1iFg3VGB58RMXqPQeK5uvV1GJpsEtxOmZSHoXsoKApXZ5i04s3O4wE2mlrAV+rYbVX3uKP+Kr23T/W1A==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <script type="module" src="./js/singleSurah.js" defer></script>
     <style>
         /* Additional inline styles for the singleSurah page */
@@ -36,7 +36,7 @@
             font-weight: bold;
         }
 
-        .darkMode i, .settings i {
+        .darkMode i, .settings i, .backButton i {
             font-size: 24px;
             cursor: pointer;
         }
@@ -248,18 +248,17 @@
         /* Navigation Buttons Styling */
         .navButton {
             position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: 20px;
             background-color: #00796b;
             color: #fff;
-            border: none;
-            padding: 10px 20px;
+            border: 2px solid #004d40;
             border-radius: 50%;
+            padding: 10px 15px;
             font-size: 24px;
             cursor: pointer;
-            z-index: 1001;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s, box-shadow 0.3s;
+            z-index: 1001;
         }
 
         .navButton:hover {
@@ -274,6 +273,34 @@
         .nextButton {
             right: 20px;
         }
+
+        /* Back and Settings Button Styling */
+        .backButton, .settingsTopButton {
+            position: fixed;
+            top: 20px;
+            background-color: #00796b;
+            color: #fff;
+            border: 2px solid #004d40;
+            border-radius: 50%;
+            padding: 10px 15px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .backButton:hover, .settingsTopButton:hover {
+            background-color: #004d40;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .backButton {
+            left: 20px;
+        }
+
+        .settingsTopButton {
+            right: 20px;
+        }
     </style>
 </head>
 <body>
@@ -285,7 +312,7 @@
         <div class="darkMode" title="Toggle Dark Mode">
             <i class="bi bi-moon-fill"></i> 
         </div>
-        <div class="settings" title="Settings">
+        <div class="settingsTopButton" title="Settings">
             <i class="bi bi-gear"></i>
         </div>
         <div class="scroll-indicator">
@@ -296,7 +323,6 @@
             <button id="decreaseFontSize">Decrease Font Size</button>
             <button id="resetFontSize">Reset Font Size</button>
             <button id="toggleCopy">Toggle Copy Ayah</button>
-            <!-- Additional settings can be added here -->
         </div>
     </header>
 
@@ -309,7 +335,7 @@
     <button class="navButton nextButton" onclick="navigate('next')"><i class="fas fa-chevron-right"></i></button>
 
     <!-- Back Button -->
-    <button class="backButton" onclick="goBack()">Back</button>
+    <button class="backButton" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
 
     <div class="scrollTop">
         <i class="bi bi-arrow-up-circle"></i>
@@ -359,7 +385,7 @@
         });
 
         // Settings Panel Toggle
-        const settingsButton = document.querySelector('.settings');
+        const settingsButton = document.querySelector('.settingsTopButton');
         const settingsPanel = document.querySelector('.settings-panel');
 
         settingsButton.addEventListener('click', () => {
@@ -392,7 +418,7 @@
         function navigate(direction) {
             const currentSurahId = getCurrentSurahId(); // Implement this function based on your data
             const nextSurahId = direction === 'next' ? currentSurahId + 1 : currentSurahId - 1;
-            window.location.href = `/surah/${nextSurahId}`; // Modify this URL based on your routing
+            window.location.href = `/singleSurah.html?id=${nextSurahId}`; // Modify this URL based on your routing
         }
 
         // Copy Ayah Functionality
@@ -419,8 +445,8 @@
 
         // Mock function for current Surah ID
         function getCurrentSurahId() {
-            // Replace this with actual logic to get the current Surah ID
-            return parseInt(window.location.pathname.split('/').pop(), 10) || 1;
+            const params = new URLSearchParams(window.location.search);
+            return parseInt(params.get('id'), 10) || 1;
         }
     </script>
 </body>
