@@ -36,7 +36,7 @@
             font-weight: bold;
         }
 
-        .darkMode i, .settingsTopButton i, .backButton i {
+        .darkMode i {
             font-size: 24px;
             cursor: pointer;
         }
@@ -274,34 +274,6 @@
             right: 20px;
         }
 
-        /* Back and Settings Button Styling */
-        .backButton, .settingsTopButton {
-            position: fixed;
-            top: 20px;
-            background-color: #00796b;
-            color: #fff;
-            border: 2px solid #004d40;
-            border-radius: 50%;
-            padding: 10px 15px;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 1001;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        .backButton:hover, .settingsTopButton:hover {
-            background-color: #004d40;
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .backButton {
-            left: 20px;
-        }
-
-        .settingsTopButton {
-            right: 20px;
-        }
-
         /* Font Size Display */
         .fontSizeControl {
             display: flex;
@@ -341,9 +313,6 @@
         <div class="darkMode" title="Toggle Dark Mode">
             <i class="bi bi-moon-fill"></i>
         </div>
-        <div class="settingsTopButton" title="Settings">
-            <i class="bi bi-gear"></i>
-        </div>
         <div class="scroll-indicator">
             <div class="bar"></div>
         </div>
@@ -363,11 +332,8 @@
     </main>
 
     <!-- Navigation Buttons -->
-    <button class="navButton prevButton" onclick="navigate('prev')"><i class="fas fa-chevron-left"></i></button>
-    <button class="navButton nextButton" onclick="navigate('next')"><i class="fas fa-chevron-right"></i></button>
-
-    <!-- Back Button -->
-    <button class="backButton" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+    <button class="navButton prevButton" onclick="navigate('prev')"><i class="fa fa-arrow-circle-left"></i></button>
+    <button class="navButton nextButton" onclick="navigate('next')"><i class="fa fa-arrow-circle-right"></i></button>
 
     <div class="scrollTop">
         <i class="bi bi-arrow-up-circle"></i>
@@ -448,11 +414,6 @@
         scrollTopButton.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-
-        // Back Button Functionality
-        function goBack() {
-            window.history.back();
-        }
 
         // Navigation Functionality
         function navigate(direction) {
