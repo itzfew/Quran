@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            color: #333;
         }
 
         .container {
@@ -20,37 +21,39 @@
 
         header {
             text-align: center;
+            margin-bottom: 20px;
         }
 
         header h1 {
             margin-bottom: 20px;
+            font-size: 32px;
+            color: #00796b;
         }
 
         .controls {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 20px;
         }
 
-        .searchBox {
-            padding: 10px;
+        .searchBox, .sortable {
+            padding: 12px;
             font-size: 16px;
-            border: 1px solid #ccc;
+            border: 2px solid #00796b;
             border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
         }
 
-        .sortable {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        .searchBox:focus, .sortable:focus {
+            border-color: #004d40;
         }
 
         .surahList {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
         }
 
         .surahCard {
@@ -58,42 +61,63 @@
             justify-content: space-between;
             padding: 15px;
             background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            border: 2px solid #00796b;
+            border-radius: 8px;
             text-decoration: none;
             color: #333;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .surahCard:hover {
-            background-color: #f9f9f9;
+            background-color: #e0f2f1;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
 
         .leftInfo {
             display: flex;
+            align-items: center;
         }
 
         .num {
             margin-right: 15px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .name h3 {
             margin: 0;
+            font-size: 18px;
+            font-weight: bold;
         }
 
         .name p {
             margin: 5px 0 0;
             font-size: 14px;
+            color: #00796b;
         }
 
         .rightInfo {
             text-align: right;
         }
 
+        .rightInfo span {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .rightInfo p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #555;
+        }
+
         .loading, .no-results {
             text-align: center;
             font-size: 18px;
             color: #555;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -102,8 +126,8 @@
         <header>
             <h1>Quran Surahs</h1>
             <div class="controls">
-                <input type="text" class="searchBox" placeholder="Search Surah...">
-                <select class="sortable">
+                <input type="text" class="searchBox" placeholder="Search Surah..." aria-label="Search Surah">
+                <select class="sortable" aria-label="Sort Surahs">
                     <option value="asc">Sort by Number (Asc)</option>
                     <option value="desc">Sort by Number (Desc)</option>
                 </select>
@@ -115,87 +139,76 @@
     </div>
 
     <script>
-        const surahList = document.querySelector('.surahList'),
-            searchBox = document.querySelector('.searchBox'),
-            sortable = document.querySelector('.sortable');
+        document.addEventListener('DOMContentLoaded', () => {
+            const surahList = document.querySelector('.surahList');
+            const searchBox = document.querySelector('.searchBox');
+            const sortable = document.querySelector('.sortable');
 
-        let surahs = [];
+            let surahs = [];
 
-        // Fetch data from the Al-Quran API 
-        async function fetchSurahList() {
-            try {
-                const res = await fetch(`https://api.alquran.cloud/v1/surah`);
-                const data = await res.json();
-                surahs = data.data;
-                displaySurahs();
-            } catch (err) {
-                console.error("Error fetching data: " + err);
-            }
-        }
-
-        // Display Surahs based on search and sort criteria
-        function displaySurahs() {
-            let html = '';
-            if (surahs.length === 0) {
-                surahList.innerHTML = `<h2 class="loading">Loading...</h2>`;
-            } else {
-                surahs
-                    .filter((item) => {
-                        return item.englishName.toLowerCase().includes(searchBox.value.toLowerCase());
-                    })
-                    .sort((a, b) => {
-                        if (sortable.value === 'asc') {
-                            return a.number - b.number;
-                        } else if (sortable.value === 'desc') {
-                            return b.number - a.number;
-                        }
-                    })
-                    .forEach((item) => {
-                        html += `
-                        <a href="singleSurah.html?id=${item.number}" class="surahCard">
-                        <div class="leftInfo">
-                            <div class="num">
-                                <span>${item.number}</span>
-                            </div>
-                            <div class="name">
-                                <h3>${item.englishName}</h3>
-                                <p>${item.englishNameTranslation}</p>
-                            </div>
-                        </div>
-                        <div class="rightInfo">
-                            <span>${item.name}</span>
-                            <p>${item.numberOfAyahs} Verses</p>
-                        </div>
-                        </a>
-                        `;
-                    });
-
-                surahList.innerHTML = html;
-                if (html === '') {
-                    surahList.innerHTML = `<h2 class="no-results">No Results Found</h2>`;
+            async function fetchSurahList() {
+                try {
+                    const res = await fetch('https://api.alquran.cloud/v1/surah');
+                    const data = await res.json();
+                    surahs = data.data;
+                    displaySurahs();
+                } catch (err) {
+                    console.error("Error fetching data: ", err);
+                    surahList.innerHTML = `<h2 class="no-results">Failed to load Surahs. Please try again later.</h2>`;
                 }
             }
-        }
 
-        // Event listeners for search and sort
-        searchBox.addEventListener('input', displaySurahs);
-        sortable.addEventListener('change', displaySurahs);
+            function displaySurahs() {
+                let html = '';
+                if (surahs.length === 0) {
+                    surahList.innerHTML = `<h2 class="loading">Loading...</h2>`;
+                } else {
+                    surahs
+                        .filter((item) => {
+                            return item.englishName.toLowerCase().includes(searchBox.value.toLowerCase());
+                        })
+                        .sort((a, b) => {
+                            return sortable.value === 'asc' ? a.number - b.number : b.number - a.number;
+                        })
+                        .forEach((item) => {
+                            html += `
+                            <a href="singleSurah.html?id=${item.number}" class="surahCard">
+                                <div class="leftInfo">
+                                    <div class="num">${item.number}</div>
+                                    <div class="name">
+                                        <h3>${item.englishName}</h3>
+                                        <p>${item.englishNameTranslation}</p>
+                                    </div>
+                                </div>
+                                <div class="rightInfo">
+                                    <span>${item.name}</span>
+                                    <p>${item.numberOfAyahs} Verses</p>
+                                </div>
+                            </a>
+                            `;
+                        });
 
-        // Initial data fetch
-        fetchSurahList();
-    </script>
-    <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then((registration) => {
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, (err) => {
-          console.log('ServiceWorker registration failed: ', err);
+                    surahList.innerHTML = html || `<h2 class="no-results">No Results Found</h2>`;
+                }
+            }
+
+            searchBox.addEventListener('input', displaySurahs);
+            sortable.addEventListener('change', displaySurahs);
+
+            fetchSurahList();
         });
-    });
-  }
-</script>
 
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch((err) => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
