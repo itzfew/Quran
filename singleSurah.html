@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,7 +36,7 @@
             font-weight: bold;
         }
 
-        .darkMode i, .settings i, .backButton i {
+        .darkMode i, .settingsTopButton i, .backButton i {
             font-size: 24px;
             cursor: pointer;
         }
@@ -301,6 +301,35 @@
         .settingsTopButton {
             right: 20px;
         }
+
+        /* Font Size Display */
+        .fontSizeControl {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .fontSizeControl span {
+            font-size: 18px;
+            margin: 0 10px;
+        }
+
+        .fontSizeControl button {
+            background-color: #00796b;
+            color: #fff;
+            border: 1px solid #004d40;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .fontSizeControl button:hover {
+            background-color: #004d40;
+            border-color: #003d34;
+        }
     </style>
 </head>
 <body>
@@ -310,7 +339,7 @@
             <h2>Online Quran</h2>
         </div>
         <div class="darkMode" title="Toggle Dark Mode">
-            <i class="bi bi-moon-fill"></i> 
+            <i class="bi bi-moon-fill"></i>
         </div>
         <div class="settingsTopButton" title="Settings">
             <i class="bi bi-gear"></i>
@@ -319,8 +348,11 @@
             <div class="bar"></div>
         </div>
         <div class="settings-panel">
-            <button id="increaseFontSize">Increase Font Size</button>
-            <button id="decreaseFontSize">Decrease Font Size</button>
+            <div class="fontSizeControl">
+                <button id="decreaseFontSize">-</button>
+                <span id="fontSizeDisplay">16</span> <!-- Initial font size -->
+                <button id="increaseFontSize">+</button>
+            </div>
             <button id="resetFontSize">Reset Font Size</button>
             <button id="toggleCopy">Toggle Copy Ayah</button>
         </div>
@@ -345,8 +377,12 @@
         // Load stored font size from localStorage
         document.addEventListener('DOMContentLoaded', () => {
             const storedFontSize = localStorage.getItem('fontSize');
+            const fontSizeDisplay = document.getElementById('fontSizeDisplay');
             if (storedFontSize) {
                 document.body.style.fontSize = storedFontSize;
+                fontSizeDisplay.innerText = parseInt(storedFontSize, 10);
+            } else {
+                fontSizeDisplay.innerText = '16'; // Default font size
             }
         });
 
@@ -362,11 +398,13 @@
             reset: document.getElementById('resetFontSize')
         };
 
+        const fontSizeDisplay = document.getElementById('fontSizeDisplay');
         let currentFontSize = parseInt(getComputedStyle(document.body).fontSize, 10);
 
         fontSizeButtons.increase.addEventListener('click', () => {
             currentFontSize += 2;
             document.body.style.fontSize = `${currentFontSize}px`;
+            fontSizeDisplay.innerText = currentFontSize;
             localStorage.setItem('fontSize', `${currentFontSize}px`);
         });
 
@@ -374,6 +412,7 @@
             if (currentFontSize > 10) { // Prevent font size from getting too small
                 currentFontSize -= 2;
                 document.body.style.fontSize = `${currentFontSize}px`;
+                fontSizeDisplay.innerText = currentFontSize;
                 localStorage.setItem('fontSize', `${currentFontSize}px`);
             }
         });
@@ -381,6 +420,7 @@
         fontSizeButtons.reset.addEventListener('click', () => {
             currentFontSize = 16; // Reset to initial size
             document.body.style.fontSize = `${currentFontSize}px`;
+            fontSizeDisplay.innerText = currentFontSize;
             localStorage.setItem('fontSize', `${currentFontSize}px`);
         });
 
