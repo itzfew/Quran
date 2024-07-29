@@ -230,6 +230,28 @@
             background-color: #333;
             border-color: #555;
         }
+
+        /* Back Button Styling */
+        .backButton {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: #00796b;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .backButton:hover {
+            background-color: #004d40;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -258,6 +280,9 @@
     <main>
         <!-- Dynamically Surah render -->
     </main>
+
+    <!-- Back Button -->
+    <button class="backButton" onclick="goBack()">Back</button>
 
     <div class="scrollTop">
         <i class="bi bi-arrow-up-circle"></i>
@@ -319,6 +344,11 @@
         scrollTopButton.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
+        // Back Button Functionality
+        function goBack() {
+            window.history.back();
+        }
     </script>
 </body>
 </html>
