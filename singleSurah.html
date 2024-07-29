@@ -254,11 +254,11 @@
             color: #fff;
             border: none;
             padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 50%;
+            font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1001;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s, box-shadow 0.3s;
         }
 
@@ -316,6 +316,14 @@
     </div>
 
     <script>
+        // Load stored font size from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedFontSize = localStorage.getItem('fontSize');
+            if (storedFontSize) {
+                document.body.style.fontSize = storedFontSize;
+            }
+        });
+
         // Dark Mode Toggle
         document.querySelector('.darkMode').addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
@@ -328,23 +336,26 @@
             reset: document.getElementById('resetFontSize')
         };
 
-        let currentFontSize = 16; // Initial font size in pixels
+        let currentFontSize = parseInt(getComputedStyle(document.body).fontSize, 10);
 
         fontSizeButtons.increase.addEventListener('click', () => {
             currentFontSize += 2;
             document.body.style.fontSize = `${currentFontSize}px`;
+            localStorage.setItem('fontSize', `${currentFontSize}px`);
         });
 
         fontSizeButtons.decrease.addEventListener('click', () => {
             if (currentFontSize > 10) { // Prevent font size from getting too small
                 currentFontSize -= 2;
                 document.body.style.fontSize = `${currentFontSize}px`;
+                localStorage.setItem('fontSize', `${currentFontSize}px`);
             }
         });
 
         fontSizeButtons.reset.addEventListener('click', () => {
             currentFontSize = 16; // Reset to initial size
             document.body.style.fontSize = `${currentFontSize}px`;
+            localStorage.setItem('fontSize', `${currentFontSize}px`);
         });
 
         // Settings Panel Toggle
